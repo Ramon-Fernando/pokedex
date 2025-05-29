@@ -1,21 +1,36 @@
 package com.ramon.pokedex.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
+import java.util.Objects;
 
 @Entity
 public class Pokemon {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
 
     @ManyToOne
+    @JoinColumn (name="tipo_id")
     private Tipo tipo;
 
     @ManyToOne
+    @JoinColumn (name="tipo_sec_id")
     private Tipo tipoSecundario;
+
+    public Pokemon(){
+    }
+
+    public Pokemon(String nome, Tipo tipo) {
+        this.nome = nome;
+        this.tipo = tipo;
+    }
+
+    public Pokemon(String nome, Tipo tipo, Tipo tipoSecundario) {
+        this.nome = nome;
+        this.tipo = tipo;
+        this.tipoSecundario = tipoSecundario;
+    }
 
     public Long getId() {
         return id;
@@ -43,5 +58,17 @@ public class Pokemon {
 
     public void setTipoSecundario(Tipo tipoSecundario) {
         this.tipoSecundario = tipoSecundario;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Pokemon pokemon = (Pokemon) o;
+        return Objects.equals(nome, pokemon.nome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(nome);
     }
 }
