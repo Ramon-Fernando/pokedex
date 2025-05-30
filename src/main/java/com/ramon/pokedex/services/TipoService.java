@@ -39,4 +39,12 @@ public class TipoService {
         return new TipoDTO(entity);
     }
 
+    @Transactional
+    public TipoDTO update(Long id, TipoDTO dto) {
+        Tipo entity = repository.getReferenceById(id);
+        entity.setNome(dto.getNome());
+        entity = repository.save(entity);
+
+        return new TipoDTO(entity);
+    }
 }
