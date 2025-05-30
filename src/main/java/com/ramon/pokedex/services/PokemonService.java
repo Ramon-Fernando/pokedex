@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,24 @@ public class PokemonService {
         Pokemon pokemon = result.get();
         PokemonDTO dto = new PokemonDTO(pokemon);
         return dto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<PokemonDTO> findAll(){
+        List<Pokemon> result = repository.findAll();
+        return result.stream().map(x -> new PokemonDTO(x)).toList();
+    }
+
+    @Transactional
+    public PokemonDTO insert(PokemonDTO dto) {
+
+        Pokemon entity = new Pokemon();
+        entity.setNome(dto.getNome());
+        entity.setTipo(dto.getTipo());
+        entity.setTipoSecundario(dto.getTipoSecundario());
+        entity = repository.save(entity);
+
+        return new PokemonDTO(entity);
+
     }
 }
