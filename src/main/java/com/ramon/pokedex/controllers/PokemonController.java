@@ -1,8 +1,6 @@
 package com.ramon.pokedex.controllers;
 
-import com.ramon.pokedex.dto.PokemonDTO;
-
-import com.ramon.pokedex.entities.Pokemon;
+import com.ramon.pokedex.dto.PokemonTipoDTO;
 import com.ramon.pokedex.services.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,19 +18,19 @@ public class PokemonController {
     private PokemonService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PokemonDTO> findById(@PathVariable Long id) {
-        PokemonDTO dto = service.findById(id);
+    public ResponseEntity<PokemonTipoDTO> findById(@PathVariable Long id) {
+        PokemonTipoDTO dto = service.findById(id);
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public ResponseEntity<List<PokemonDTO>> findAll() {
-        List<PokemonDTO> list = service.findAll();
+    public ResponseEntity<List<PokemonTipoDTO>> findAll() {
+        List<PokemonTipoDTO> list = service.findAll();
         return ResponseEntity.ok(list);
     }
 
     @PostMapping
-    public ResponseEntity<PokemonDTO> insert(@RequestBody PokemonDTO dto) {
+    public ResponseEntity<PokemonTipoDTO> insert(@RequestBody PokemonTipoDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();

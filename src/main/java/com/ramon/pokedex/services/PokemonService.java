@@ -1,8 +1,10 @@
 package com.ramon.pokedex.services;
 
-import com.ramon.pokedex.dto.PokemonDTO;
+import com.ramon.pokedex.dto.PokemonTipoDTO;
 import com.ramon.pokedex.entities.Pokemon;
+import com.ramon.pokedex.entities.Tipo;
 import com.ramon.pokedex.repositories.PokemonRepository;
+import com.ramon.pokedex.repositories.TipoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,30 +18,37 @@ public class PokemonService {
     @Autowired
     private PokemonRepository repository;
 
+    @Autowired
+    private TipoRepository tipoRepository;
+
     @Transactional(readOnly = true)
-    public PokemonDTO findById(Long id){
+    public PokemonTipoDTO findById(Long id){
         Optional<Pokemon> result = repository.findById(id);
         Pokemon pokemon = result.get();
-        PokemonDTO dto = new PokemonDTO(pokemon);
-        return dto;
+        return new PokemonTipoDTO(pokemon);
     }
 
     @Transactional(readOnly = true)
-    public List<PokemonDTO> findAll(){
+    public List<PokemonTipoDTO> findAll(){
         List<Pokemon> result = repository.findAll();
-        return result.stream().map(x -> new PokemonDTO(x)).toList();
+        return result.stream().map(x -> new PokemonTipoDTO(x)).toList();
     }
 
-    @Transactional
-    public PokemonDTO insert(PokemonDTO dto) {
 
+    @Transactional
+    public PokemonTipoDTO insert(PokemonTipoDTO dto) {
         Pokemon entity = new Pokemon();
         entity.setNome(dto.getNome());
-        entity.setTipo(dto.getTipo());
-        entity.setTipoSecundario(dto.getTipoSecundario());
+
+        Tipo tipo = tipoRepository.getReferenceById(dto.getTipo().getId());
+        entity.setTipo(tipo);
+
+        if (dto.getTipoSecundario() != null) {
+            Tipo tipoSecundario = tipoRepository.getReferenceById(dto.getTipoSecundario().getId());
+            entity.setTipoSecundario(tipoSecundario);
+        }
         entity = repository.save(entity);
 
-        return new PokemonDTO(entity);
-
+        return new PokemonTipoDTO(entity);
     }
 }
