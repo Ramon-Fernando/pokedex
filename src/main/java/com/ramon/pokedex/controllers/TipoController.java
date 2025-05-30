@@ -3,8 +3,11 @@ package com.ramon.pokedex.controllers;
 import com.ramon.pokedex.dto.TipoDTO;
 import com.ramon.pokedex.services.TipoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -15,18 +18,22 @@ public class TipoController {
     private TipoService service;
 
     @GetMapping(value = "/{id}")
-    public TipoDTO findById(@PathVariable Long id) {
+    public ResponseEntity<TipoDTO> findById(@PathVariable Long id) {
         TipoDTO dto = service.findById(id);
-        return dto;
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public List<TipoDTO> findAll() {
-        return service.findAll();
+    public ResponseEntity<List<TipoDTO>> findAll() {
+        List<TipoDTO> list = service.findAll();
+        return ResponseEntity.ok(list);
     }
 
     @PostMapping
-    public TipoDTO insert(@RequestBody TipoDTO dto) {
-        return service.insert(dto);
+    public ResponseEntity<TipoDTO> insert(@RequestBody TipoDTO dto) {
+        dto = service.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
     }
 }
