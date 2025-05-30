@@ -36,4 +36,10 @@ public class PokemonController {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<PokemonTipoDTO> update(@PathVariable Long id, @RequestBody PokemonTipoDTO dto) {
+        dto = service.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
 }

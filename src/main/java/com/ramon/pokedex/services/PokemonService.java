@@ -38,6 +38,24 @@ public class PokemonService {
     @Transactional
     public PokemonTipoDTO insert(PokemonTipoDTO dto) {
         Pokemon entity = new Pokemon();
+        dtoToEntity(dto, entity);
+
+        entity = repository.save(entity);
+
+        return new PokemonTipoDTO(entity);
+    }
+
+    @Transactional
+    public PokemonTipoDTO update(Long id, PokemonTipoDTO dto) {
+        Pokemon entity = repository.getReferenceById(id);
+        dtoToEntity(dto, entity);
+
+        entity = repository.save(entity);
+
+        return new PokemonTipoDTO(entity);
+    }
+
+    private void dtoToEntity (PokemonTipoDTO dto, Pokemon entity) {
         entity.setNome(dto.getNome());
 
         Tipo tipo = tipoRepository.getReferenceById(dto.getTipo().getId());
@@ -46,9 +64,8 @@ public class PokemonService {
         if (dto.getTipoSecundario() != null) {
             Tipo tipoSecundario = tipoRepository.getReferenceById(dto.getTipoSecundario().getId());
             entity.setTipoSecundario(tipoSecundario);
+        } else {
+            entity.setTipoSecundario(null);
         }
-        entity = repository.save(entity);
-
-        return new PokemonTipoDTO(entity);
     }
 }
