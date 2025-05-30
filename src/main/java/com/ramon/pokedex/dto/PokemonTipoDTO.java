@@ -18,6 +18,7 @@ public class PokemonTipoDTO {
         this.tipoSecundario = tipoSecundario;
     }
 
+    //Construtor pra facilitar a conversao de entity pra dto
     public PokemonTipoDTO(Pokemon pokemon) {
         id = pokemon.getId();
         nome = pokemon.getNome();

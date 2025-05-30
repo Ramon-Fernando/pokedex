@@ -23,6 +23,12 @@ public class PokemonController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/tipo/{tipoId}")
+    public ResponseEntity<List<PokemonTipoDTO>> findByTipo(@PathVariable Long tipoId) {
+        List<PokemonTipoDTO> list = service.findByTipo(tipoId);
+        return ResponseEntity.ok(list);
+    }
+
     @GetMapping
     public ResponseEntity<List<PokemonTipoDTO>> findAll() {
         List<PokemonTipoDTO> list = service.findAll();
@@ -42,4 +48,12 @@ public class PokemonController {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

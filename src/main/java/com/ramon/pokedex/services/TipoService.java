@@ -1,7 +1,9 @@
 package com.ramon.pokedex.services;
 
 import com.ramon.pokedex.dto.TipoDTO;
+import com.ramon.pokedex.entities.Pokemon;
 import com.ramon.pokedex.entities.Tipo;
+import com.ramon.pokedex.repositories.PokemonRepository;
 import com.ramon.pokedex.repositories.TipoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class TipoService {
 
     @Autowired
     private TipoRepository repository;
+    @Autowired
+    private PokemonRepository pokemonRepository;
 
     @Transactional(readOnly = true)
     public TipoDTO findById(Long id) {
@@ -46,5 +50,21 @@ public class TipoService {
         entity = repository.save(entity);
 
         return new TipoDTO(entity);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Tipo tipo = repository.findById(id).get();
+        List<Pokemon> pokemonList = pokemonRepository.findByTipoOrTipoSecundario(tipo, tipo);
+        for (Pokemon pokemon : pokemonList) {
+            if (pokemon.getTipo().equals(tipo)) {
+                pokemon.setTipo(null);
+            }
+            if (pokemon.getTipoSecundario().equals(tipo)) {
+                pokemon.setTipoSecundario(null);
+            }
+        }
+        pokemonRepository.saveAll(pokemonList);
+        repository.deleteById(id);
     }
 }

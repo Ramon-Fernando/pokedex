@@ -29,6 +29,13 @@ public class PokemonService {
     }
 
     @Transactional(readOnly = true)
+    public List<PokemonTipoDTO> findByTipo(Long id){
+        Tipo tipo = tipoRepository.findById(id).get();
+        List<Pokemon> result = repository.findByTipoOrTipoSecundario(tipo, tipo);
+        return result.stream().map(x -> new PokemonTipoDTO(x)).toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<PokemonTipoDTO> findAll(){
         List<Pokemon> result = repository.findAll();
         return result.stream().map(x -> new PokemonTipoDTO(x)).toList();
@@ -54,6 +61,13 @@ public class PokemonService {
 
         return new PokemonTipoDTO(entity);
     }
+
+    @Transactional
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+
+    // Metodo criado pra evitar repeticao e usado no insert e update pra transformar dto em entidade
 
     private void dtoToEntity (PokemonTipoDTO dto, Pokemon entity) {
         entity.setNome(dto.getNome());
