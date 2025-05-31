@@ -60,7 +60,7 @@ public class TipoService {
             if (pokemon.getTipo().equals(tipo)) {
                 pokemon.setTipo(null);
             }
-            if (pokemon.getTipoSecundario().equals(tipo)) {
+            if (pokemon.getTipoSecundario() != null && pokemon.getTipoSecundario().equals(tipo)) {
                 pokemon.setTipoSecundario(null);
             }
         }

@@ -18,11 +18,13 @@ public class PokemonTipoDTO {
         this.tipoSecundario = tipoSecundario;
     }
 
-    //Construtor pra facilitar a conversao de entity pra dto
+    //Construtor pra facilitar a conversao de entity pra dto. If no tipo primario pra listagem apos desassociacao por exclusao do tipo.
     public PokemonTipoDTO(Pokemon pokemon) {
         id = pokemon.getId();
         nome = pokemon.getNome();
-        tipo = new TipoDTO(pokemon.getTipo());
+        if (pokemon.getTipo() != null) {
+            tipo = new TipoDTO(pokemon.getTipo());
+        }
         if (pokemon.getTipoSecundario() != null) {
             tipoSecundario = new TipoDTO(pokemon.getTipoSecundario());
         }
