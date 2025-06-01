@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabela de Pokémons</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Pokémon Table</h2>
+
+        <div class="actions">
+            <button id="btnTipos">Gerenciar Tipos</button>
+            <button id="btnAdicionar">Adicionar Pokémon</button>
+        </div>
+
+        <!-- Formulário oculto -->
+        <div id="formularioAdicionar" style="display: none; margin-top: 1rem;">
+            <h3>Adicionar Novo Pokémon</h3>
+            <input type="text" id="novoNome" placeholder="Nome do Pokémon" />
+            <select id="novoTipo">
+                <option value="">Selecione o tipo</option>
+            </select>
+            <select id="novoTipoSecundario">
+                <option value="">Nenhum</option>
+            </select>
+            <button id="btnSalvarNovo">Salvar</button>
+        </div>
+
+
+        <div class="filters">
+            <input type="text" id="filtroNome" placeholder="Filtrar por nome">
+            <select id="filtroTipo">
+                <option value="">Todos os tipos</option>
+                <!-- Tipos adicionados dinamicamente -->
+            </select>
+        </div>
+
+        <table id="pokemonTable">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Tipo Primário</th>
+                    <th>Tipo Secundário</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Pokémons serão inseridos aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
