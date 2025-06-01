@@ -64,7 +64,7 @@ cd pokedex
 
 1. Apesar do backend dos tipos estar completo, o frontend de gerenciar tipos está incompleto. Logo, a deleção, modificação e edição de tipos só pode ser feita através de requisições no Postman.
 
-2. O tratamento de exceções está incompleto, como por exemplo tentar acessar um id inexistente. Entretando, alguns tratamentos foram feitos nos métodos para evitar que a aplicação pare com as funcionalidades existentes feitas através do navegador.
+2. O tratamento de exceções está incompleto, como por exemplo tentar acessar um id inexistente. Entretanto, alguns tratamentos foram feitos nos métodos para evitar que a aplicação pare de rodar com as funcionalidades existentes feitas através do navegador.
 
 3. Em relação a deleção de tipos, como tipos é chave estrangeira na tabela pokémons, há dois caminhos: 1. Deletar todos os pokémons associados ao tipo deletado via cascada ou 2. Desassociar o tipo a ser deletado dos pokémons associados e por fim deletar o tipo. A segunda opção foi escolhida.
 
@@ -74,5 +74,5 @@ cd pokedex
 2. Polir o frontend com algum framework;
 3. Fazer tratamento de exceções no backend;
 4. Substituir o banco de testes H2 por Postgres ou MySQL
-4. Conteinerização da aplicação no Docker e hospedagem em cloud como AWS.
+5. Conteinerização da aplicação no Docker e hospedagem em cloud como AWS.
 
