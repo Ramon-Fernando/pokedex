@@ -73,5 +73,6 @@ cd pokedex
 1. Terminar a parte de gerenciar tipos no frontend;
 2. Polir o frontend com algum framework;
 3. Fazer tratamento de exceções no backend;
+4. Substituir o banco de testes H2 por Postgres ou MySQL
 4. Conteinerização da aplicação no Docker e hospedagem em cloud como AWS.
 
